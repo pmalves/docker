@@ -27,13 +27,8 @@ RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
 
 
 
-# install postgresql
-#RUN apt-get -y -q install postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3 
-
-
 ADD biserver-ce-6.0.1.0-386.tar.gz /pentaho/
 ADD scripts/run.sh /pentaho/
-#ADD pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
 
 EXPOSE 8080 8044
 
@@ -44,15 +39,6 @@ RUN chown -R pentaho.pentaho /pentaho && chown -R pentaho.pentaho /home/pentaho
 WORKDIR /pentaho
 USER pentaho
 
-
-# 1. Run 
-
-#RUN echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf ; \
-  #/etc/init.d/postgresql start; \
-	#cd /pentaho/biserver-ce/data/postgresql; \
-	#psql -U postgres -f create_jcr_postgresql.sql; \
-	#psql -U postgres -f create_quartz_postgresql.sql; \
-	#psql -U postgres -f create_repository_postgresql.sql;
 
 RUN rm /pentaho/biserver-ce/promptuser.sh; \
 		touch /pentaho/biserver-ce/tomcat/logs/catalina.out ; \
