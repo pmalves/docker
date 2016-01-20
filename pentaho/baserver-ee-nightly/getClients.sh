@@ -24,14 +24,15 @@ BOX_URL=${BOX_URL:-ftp.box.com/CI}
 DIR=clients
 
 
-# Print a quick status of current dir
-if ! [ -d $DIR ]
-then
-  echo No local client tools found
-  echo
-else
-  echo Latest build found for client tools: $( ls -d $DIR/*/ | cut -f2 -d'/' | sort -n -r | head -n 1 )
-fi
+## Print a quick status of current dir
+## I uncommented this cause it's mostly useless
+# if ! [ -d $DIR ]
+# then
+#   echo No local client tools found
+#   echo
+# else
+#   echo Latest build found for client tools: $( ls -d $DIR/*/ | cut -f2 -d'/' | sort -n -r | head -n 1 )
+# fi
 
 # Get list of files
 echo Connecting to box...
