@@ -94,15 +94,15 @@ else
   mkdir -p $tooldir
 fi
 
-# Downloading...
+# Downloading. We need to take into account the fact that mondrian stuff doesnt respect the same naming pattern
 
 lftp -c "lcd $tooldir; open -u $BOX_USER,$BOX_PASSWORD $BOX_URL ; \
   cd $branch/$buildno; \
-  get $product-$branch-$buildno.zip \
+  mget $product-*-$buildno.zip \
   ";
 
-unzip $tooldir/$product-$branch-$buildno.zip -d $tooldir
-echo rm $tooldir/$product-$branch-$buildno.zip 
+unzip $tooldir/$product-*-$buildno.zip -d $tooldir
+rm $tooldir/$product-*-$buildno.zip 
 
 echo Done. 
 
