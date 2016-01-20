@@ -97,7 +97,7 @@ fi
 # Downloading...
 
 lftp -c "lcd $tooldir; open -u $BOX_USER,$BOX_PASSWORD $BOX_URL ; \
-  cd $BRANCH/$BUILD; \
+  cd $branch/$buildno; \
   get $product-$branch-$buildno.zip \
   ";
 
