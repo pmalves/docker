@@ -58,7 +58,7 @@ read -e -p "Which build number? [$BUILD]: " buildno
 buildno=${buildno:-$BUILD}
 
 
-PRODUCTS=(pdi-ee pdi-ce prd-ee prd-ce pme-ee pme-ce psw-ee psw-ce pad-ee pad-ce)
+PRODUCTS=(pdi-ee-client pdi-ce prd-ee prd-ce pme-ee pme-ce psw-ee psw-ce pad-ee pad-ce)
 
 echo Available client tools
 echo
