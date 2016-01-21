@@ -54,7 +54,7 @@ read -e -p "Which build number? [$BUILD]: " buildno
 buildno=${buildno:-$BUILD}
 
 # Ask for product
-read -e -p "Which server ('ee' or 'merged')? [$PRODUCT]: " product
+read -e -p "Which server ('ee' or 'merged-ee')? [$PRODUCT]: " product
 product=${product:-$PRODUCT}
 
 read -e -p 'Press any key to start building docker image. This will take a while...' -n 1 foo
