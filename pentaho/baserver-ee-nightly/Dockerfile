@@ -35,6 +35,7 @@ RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     
 
 ADD pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
+ADD scripts/run.sh /pentaho/
 
 RUN mkdir -p /pentaho/tmp && \
   lftp -c "lcd /pentaho/tmp; open -u $BOX_USER,$BOX_PASSWORD $BOX_URL ; cd $BRANCH/$BUILD; mget \ 
@@ -52,6 +53,7 @@ RUN mkdir -p /pentaho/tmp && \
   unzip /pentaho/tmp/pir-plugin-ee-$BRANCH-$BUILD.zip -dbiserver-ee/pentaho-solutions/system && \
   unzip /pentaho/tmp/pdd-plugin-ee-$BRANCH-$BUILD.zip -dbiserver-ee/pentaho-solutions/system && \
   license-installer/install_license.sh install -q  /pentaho/tmp/*lic && \ 
+  mv /root/.pentaho/.installedLicenses.xml /pentaho/biserver* && \ 
   echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf && \
   /etc/init.d/postgresql start && \
   cd /pentaho/biserver-ee/data/postgresql; \
@@ -63,14 +65,12 @@ RUN mkdir -p /pentaho/tmp && \
   touch /pentaho/biserver-ee/tomcat/logs/pentaho.log ; \
   sed -i -e 's/\(exec ".*"\) start/\1 run/' /pentaho/biserver-ee/tomcat/bin/startup.sh; \
   mkdir /home/pentaho && groupadd -r pentaho && useradd -r -g pentaho -p $(perl -e'print crypt("pentaho", "aa")' ) -G sudo pentaho && \ 
-  mv /root/.pentaho /home/pentaho/ && \
   chown -R pentaho.pentaho /pentaho && \ 
   chown -R pentaho.pentaho /home/pentaho
 
 WORKDIR /pentaho
 USER pentaho
 
-ADD scripts/run.sh /pentaho/
 
 EXPOSE 8080 8044
 
