@@ -71,8 +71,8 @@ then
 fi
 
 
-# Go to the nightly start
-./start-nightly.sh
+# Suggest going to the nightly start
+echo Done. You may want to use the ./start-nightly.sh command
 
 
 exit 0

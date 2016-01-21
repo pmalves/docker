@@ -23,7 +23,7 @@ RUN update-locale LANG=en_US.UTF-8 LC_MESSAGES=POSIX && \
 # For jdk8, install oracle-java8-installer
 
 RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
-    apt-get update && apt-get install -y software-properties-common unzip lftp postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3  && \
+    apt-get update && apt-get install -y software-properties-common unzip git lftp postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3  && \
     add-apt-repository ppa:webupd8team/java -y && \
     apt-get update && \
     echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
@@ -34,11 +34,10 @@ RUN sed 's/main$/main universe/' -i /etc/apt/sources.list && \
     rm -rf /tmp/*
     
 
-ADD scripts/run.sh /pentaho/
 ADD pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
 
-RUN mkdir /pentaho/tmp && \
-  lftp -c "lcd /tmp; open -u $BOX_USER,$BOX_PASSWORD $BOX_URL ; cd $BRANCH/$BUILD; mget \ 
+RUN mkdir -p /pentaho/tmp && \
+  lftp -c "lcd /pentaho/tmp; open -u $BOX_USER,$BOX_PASSWORD $BOX_URL ; cd $BRANCH/$BUILD; mget \ 
   biserver-$PRODUCT-$BRANCH-$BUILD.zip \
   paz-plugin-ee-$BRANCH-$BUILD.zip \
   pir-plugin-ee-$BRANCH-$BUILD.zip \
@@ -64,11 +63,14 @@ RUN mkdir /pentaho/tmp && \
   touch /pentaho/biserver-ee/tomcat/logs/pentaho.log ; \
   sed -i -e 's/\(exec ".*"\) start/\1 run/' /pentaho/biserver-ee/tomcat/bin/startup.sh; \
   mkdir /home/pentaho && groupadd -r pentaho && useradd -r -g pentaho -p $(perl -e'print crypt("pentaho", "aa")' ) -G sudo pentaho && \ 
+  mv /root/.pentaho /home/pentaho/ && \
   chown -R pentaho.pentaho /pentaho && \ 
   chown -R pentaho.pentaho /home/pentaho
 
 WORKDIR /pentaho
 USER pentaho
+
+ADD scripts/run.sh /pentaho/
 
 EXPOSE 8080 8044
 

@@ -8,9 +8,11 @@ sudo /etc/init.d/postgresql start
 
 if [ -z "$DEBUG" ]; then
   echo Starting Pentaho in normal mode
-  /pentaho/biserver-ee/start-pentaho.sh;
+  cd /pentaho/biserver-*
+  ./start-pentaho.sh;
 else
   echo Starting Pentaho in debug mode
-  /pentaho/biserver-ee/start-pentaho-debug.sh;
+  cd /pentaho/biserver-*
+  ./start-pentaho-debug.sh;
 fi
 
