@@ -4,7 +4,7 @@
 sudo /etc/init.d/postgresql start
 
 
-
+export PENTAHO_INSTALLED_LICENSE_PATH=/home/pentaho/.pentaho/.installedLicenses.xml
 
 if [ -z "$DEBUG" ]; then
   echo Starting Pentaho in normal mode
