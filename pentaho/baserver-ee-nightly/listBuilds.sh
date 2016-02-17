@@ -21,7 +21,7 @@ VERSIONS=(6.0-NIGHTLY 6.1.0.0)
 BOX_URL=${BOX_URL:-ftp.box.com/CI}
 PRODUCT=ee
 
-# Test
+# Stable builds
 
 echo Release available - Branch: 5.4.0.9 , Buind number: 162
 echo Release available - Branch: 6.0.1.0 , Buind number: 386

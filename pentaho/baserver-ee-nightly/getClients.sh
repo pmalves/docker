@@ -34,8 +34,15 @@ DIR=clients
 #   echo Latest build found for client tools: $( ls -d $DIR/*/ | cut -f2 -d'/' | sort -n -r | head -n 1 )
 # fi
 
+# Stable builds
+
+echo Release available - Branch: 5.4.0.9 , Buind number: 162
+echo Release available - Branch: 6.0.1.0 , Buind number: 386
+
+
 # Get list of files
-echo Connecting to box...
+
+echo  ... connecting to box to get the nightlies
 
 for i in ${VERSIONS[@]}; do
 	
@@ -43,7 +50,7 @@ for i in ${VERSIONS[@]}; do
 
 	BRANCH=$(echo $result | cut -f1 -d/)
 	BUILD=$(echo $result | cut -f2 -d/)
-	echo Build available - Branch: $BRANCH , Build number: $BUILD
+	echo Nightly available - Branch: $BRANCH , Build number: $BUILD
 done
 
 
