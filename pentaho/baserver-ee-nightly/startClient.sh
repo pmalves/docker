@@ -88,6 +88,21 @@ then
 		cd report-designer
 		./report-designer.sh
 
+	elif [${CLIENTS[$clientNo]} == "pme-ee" ] || [ ${CLIENTS[$clientNo]} == "pme-ce" ]
+	then
+		cd metadata-editor
+		./metadata-editor.sh
+
+	elif [${CLIENTS[$clientNo]} == "psw-ee" ] || [ ${CLIENTS[$clientNo]} == "psw-ce" ]
+	then
+		cd schema-workbench
+		./workbench.sh
+
+	elif [${CLIENTS[$clientNo]} == "pad-ee" ] || [ ${CLIENTS[$clientNo]} == "pad-ce" ]
+	then
+		cd pentaho-aggdesigner-ui
+		./startaggregationdesigner.sh
+
 	else
 		echo The author was probably lazy enough to not implement what to do with ${CLIENTS[$clientNo]}...
 		cd $BASEDIR
