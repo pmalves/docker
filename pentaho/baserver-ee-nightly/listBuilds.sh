@@ -72,7 +72,7 @@ fi
 
 
 # Suggest going to the nightly start
-echo Done. You may want to use the ./start-nightly.sh command
+echo Done. You may want to use the ./startNightly.sh command
 
 
 exit 0
