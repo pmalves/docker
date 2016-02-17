@@ -96,15 +96,16 @@ else
 fi
 
 # Downloading. We need to take into account the fact that mondrian stuff doesnt respect the same naming pattern
+# Also - don't download mac stuff
 
 lftp -c "lcd $tooldir; open -u $BOX_USER,$BOX_PASSWORD $BOX_URL ; \
   cd $branch/$buildno; \
-  mget $product-*-$buildno.zip \
+  mget $product-[^m]*-$buildno.zip \
   ";
 
 unzip $tooldir/$product-*-$buildno.zip -d $tooldir
-rm $tooldir/$product-*-$buildno.zip 
+echo rm $tooldir/$product-*-$buildno.zip 
 
-echo Done. 
+echo Done. You may want to use the ./start-client.sh command
 
 exit 0
