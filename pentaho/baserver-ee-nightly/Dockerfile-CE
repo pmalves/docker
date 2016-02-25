@@ -40,30 +40,19 @@ ADD scripts/run.sh /pentaho/
 RUN mkdir -p /pentaho/tmp && \
   lftp -c "lcd /pentaho/tmp; open -u $BOX_USER,$BOX_PASSWORD $BOX_URL ; cd $BRANCH/$BUILD; mget \ 
   biserver-$PRODUCT-$BRANCH-$BUILD.zip \
-  paz-plugin-ee-$BRANCH-$BUILD.zip \
-  pir-plugin-ee-$BRANCH-$BUILD.zip \
-  pdd-plugin-ee-$BRANCH-$BUILD.zip \
-  ; \
-  cd /CI/DEV_LICENSES; \
-  mget *.lic \
   "; \
   cd /pentaho && \
   unzip /pentaho/tmp/biserver-$PRODUCT-$BRANCH-$BUILD.zip -d . && \
-  unzip /pentaho/tmp/paz-plugin-ee-$BRANCH-$BUILD.zip -dbiserver-ee/pentaho-solutions/system && \
-  unzip /pentaho/tmp/pir-plugin-ee-$BRANCH-$BUILD.zip -dbiserver-ee/pentaho-solutions/system && \
-  unzip /pentaho/tmp/pdd-plugin-ee-$BRANCH-$BUILD.zip -dbiserver-ee/pentaho-solutions/system && \
-  license-installer/install_license.sh install -q  /pentaho/tmp/*lic && \ 
-  mv /root/.pentaho/.installedLicenses.xml /pentaho/biserver* && \ 
   echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf && \
   /etc/init.d/postgresql start && \
-  cd /pentaho/biserver-ee/data/postgresql; \
+  cd /pentaho/biserver-ce/data/postgresql; \
   psql -U postgres -f create_jcr_postgresql.sql; \
   psql -U postgres -f create_quartz_postgresql.sql; \
   psql -U postgres -f create_repository_postgresql.sql; \
-  rm /pentaho/biserver-ee/promptuser.sh; \
-  touch /pentaho/biserver-ee/tomcat/logs/catalina.out ; \
-  touch /pentaho/biserver-ee/tomcat/logs/pentaho.log ; \
-  sed -i -e 's/\(exec ".*"\) start/\1 run/' /pentaho/biserver-ee/tomcat/bin/startup.sh; \
+  rm /pentaho/biserver-ce/promptuser.sh; \
+  touch /pentaho/biserver-ce/tomcat/logs/catalina.out ; \
+  touch /pentaho/biserver-ce/tomcat/logs/pentaho.log ; \
+  sed -i -e 's/\(exec ".*"\) start/\1 run/' /pentaho/biserver-ce/tomcat/bin/startup.sh; \
   mkdir /home/pentaho && groupadd -r pentaho && useradd -r -g pentaho -p $(perl -e'print crypt("pentaho", "aa")' ) -G sudo pentaho && \ 
   chown -R pentaho.pentaho /pentaho && \ 
   chown -R pentaho.pentaho /home/pentaho

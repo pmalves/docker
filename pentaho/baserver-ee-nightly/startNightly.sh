@@ -44,9 +44,9 @@ DEBUG=${DEBUG:-"n"}
 
 if [ $DEBUG == "y" ] || [ $DEBUG == "Y" ]
 then
-  docker run -p 8080:8080 -p 8044:8044 --name $build-debug -e DEBUG=true $build
+  docker run -p 8080:8080 -p 8044:8044 -p 9001:9001 --name $build-debug -e DEBUG=true $build
 else
-  docker run -p 8080:8080 --name $build-debug $build
+  docker run -p 8080:8080 -p 9001:9001 --name $build-debug $build
 
 fi
 

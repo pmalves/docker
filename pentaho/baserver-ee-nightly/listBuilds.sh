@@ -58,13 +58,22 @@ read -e -p "Which build number? [$BUILD]: " buildno
 buildno=${buildno:-$BUILD}
 
 # Ask for product
-read -e -p "Which server ('ee' or 'merged-ee')? [$PRODUCT]: " product
+read -e -p "Which server ('ee', 'merged-ee', 'ce' or 'merged-ce')? [$PRODUCT]: " product
 product=${product:-$PRODUCT}
 
 read -e -p 'Press any key to start building docker image. This will take a while...' -n 1 foo
 
-# Launching the creation of the docker image
-docker build --build-arg BOX_URL=$BOX_URL --build-arg BOX_USER=$BOX_USER --build-arg BOX_PASSWORD=$BOX_PASSWORD --build-arg BRANCH=$branch --build-arg BUILD=$buildno --build-arg PRODUCT=$product -t baserver-$product-$branch-$buildno .
+if [[ $product =~ ^.*ce$ ]]
+then
+
+	docker build --build-arg BOX_URL=$BOX_URL --build-arg BOX_USER=$BOX_USER --build-arg BOX_PASSWORD=$BOX_PASSWORD --build-arg BRANCH=$branch --build-arg BUILD=$buildno --build-arg PRODUCT=$product -t baserver-$product-$branch-$buildno -f Dockerfile-CE .
+
+
+else
+
+	docker build --build-arg BOX_URL=$BOX_URL --build-arg BOX_USER=$BOX_USER --build-arg BOX_PASSWORD=$BOX_PASSWORD --build-arg BRANCH=$branch --build-arg BUILD=$buildno --build-arg PRODUCT=$product -t baserver-$product-$branch-$buildno .
+
+fi
 
 
 if [ $? -ne 0 ] 
